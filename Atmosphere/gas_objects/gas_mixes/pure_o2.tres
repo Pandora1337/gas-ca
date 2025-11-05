@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GasMixObject" load_steps=5 format=3 uid="uid://chlcgg5jplo55"]
+
+[ext_resource type="Resource" uid="uid://1lv207esmjw8" path="res://Atmosphere/gas_objects/gases/oxygen.tres" id="1_1vaqo"]
+[ext_resource type="Script" uid="uid://ncbcvcifsoqa" path="res://Atmosphere/GasData.cs" id="2_y4vqv"]
+[ext_resource type="Script" uid="uid://6yayu8laepy2" path="res://Atmosphere/gas_objects/GasMixObject.cs" id="3_1vaqo"]
+
+[sub_resource type="Resource" id="Resource_78cn1"]
+script = ExtResource("2_y4vqv")
+gas = ExtResource("1_1vaqo")
+moles = 10.0
+metadata/_custom_type_script = "uid://ncbcvcifsoqa"
+
+[resource]
+script = ExtResource("3_1vaqo")
+temp = 50.0
+gasDatas = Array[Object]([SubResource("Resource_78cn1")])

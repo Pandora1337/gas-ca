@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GasObject" load_steps=2 format=3 uid="uid://1lv207esmjw8"]
+
+[ext_resource type="Script" uid="uid://d1gm7fjxylih" path="res://Atmosphere/gas_objects/GasObject.cs" id="1_anvs8"]
+
+[resource]
+script = ExtResource("1_anvs8")
+nameGas = "Oxygen"
+nameChem = "O2"
+molarHeatCapacity = 20.0
+customColor = true
+color = Color(0, 0.490196, 1, 1)
+minMolesToSee = 0.0

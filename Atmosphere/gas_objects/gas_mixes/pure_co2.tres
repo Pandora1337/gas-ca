@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GasMixObject" load_steps=5 format=3 uid="uid://cwlwas2dxpm3c"]
+
+[ext_resource type="Resource" uid="uid://i0k6cuq6dok5" path="res://Atmosphere/gas_objects/gases/carbon_dioxide.tres" id="1_78cn1"]
+[ext_resource type="Script" uid="uid://ncbcvcifsoqa" path="res://Atmosphere/GasData.cs" id="2_ug11a"]
+[ext_resource type="Script" uid="uid://6yayu8laepy2" path="res://Atmosphere/gas_objects/GasMixObject.cs" id="3_0fka7"]
+
+[sub_resource type="Resource" id="Resource_78cn1"]
+script = ExtResource("2_ug11a")
+gas = ExtResource("1_78cn1")
+moles = 15.0
+metadata/_custom_type_script = "uid://ncbcvcifsoqa"
+
+[resource]
+script = ExtResource("3_0fka7")
+temp = 500.0
+gasDatas = Array[Object]([SubResource("Resource_78cn1")])

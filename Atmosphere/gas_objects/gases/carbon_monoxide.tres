@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GasObject" load_steps=2 format=3 uid="uid://bexramdaj14bh"]
+
+[ext_resource type="Script" uid="uid://d1gm7fjxylih" path="res://Atmosphere/gas_objects/GasObject.cs" id="1_3n80n"]
+
+[resource]
+script = ExtResource("1_3n80n")
+nameGas = "Carbon Monoxide"
+nameChem = "CO"
+molarHeatCapacity = 20.0
+molarMass = 1.0
+customColor = false
+color = Color(1, 1, 1, 1)
+minMolesToSee = 0.4

@@ -1,0 +1,47 @@
+[gd_scene load_steps=11 format=4 uid="uid://dtkvl085plck6"]
+
+[ext_resource type="Script" uid="uid://dvttvldbtwm36" path="res://Atmosphere/GasManager.cs" id="1_iuq3l"]
+[ext_resource type="PackedScene" uid="uid://bq5imob1b0yq" path="res://Tiles/gas_tile.tscn" id="2_dwbse"]
+[ext_resource type="Script" uid="uid://cflntcv1n72fp" path="res://Atmosphere/GasVisualiser.cs" id="3_pkg7o"]
+[ext_resource type="Script" uid="uid://b6dy8ka6rh5rb" path="res://Atmosphere/Debug/GasInteractor.cs" id="4_ioo17"]
+[ext_resource type="Resource" uid="uid://cwlwas2dxpm3c" path="res://Atmosphere/gas_objects/gas_mixes/pure_co2.tres" id="5_gbfbk"]
+[ext_resource type="Resource" uid="uid://chlcgg5jplo55" path="res://Atmosphere/gas_objects/gas_mixes/pure_o2.tres" id="6_ioo17"]
+[ext_resource type="Script" uid="uid://cxfhcw6ya70o5" path="res://UI/CameraControl.cs" id="6_ladpr"]
+[ext_resource type="PackedScene" uid="uid://df44h0t1hshgy" path="res://Atmosphere/Debug/gas_tooltip.tscn" id="8_6w7ti"]
+[ext_resource type="TileSet" uid="uid://8bhnloyp7s68" path="res://Tiles/walls.tres" id="11_ic0uy"]
+[ext_resource type="PackedScene" uid="uid://cc18keya7wo3a" path="res://body.tscn" id="12_k3n1d"]
+
+[node name="World" type="Node2D"]
+
+[node name="GasManager" type="Node" parent="."]
+script = ExtResource("1_iuq3l")
+
+[node name="GasVisualiser" type="Node" parent="GasManager"]
+script = ExtResource("3_pkg7o")
+mode = 6
+updateTime = 0.001
+gasTile = ExtResource("2_dwbse")
+
+[node name="GasInteractor" type="Node" parent="GasManager"]
+script = ExtResource("4_ioo17")
+gases = Array[Object]([ExtResource("5_gbfbk"), ExtResource("6_ioo17")])
+body = ExtResource("12_k3n1d")
+
+[node name="GasTooltip" parent="GasManager" instance=ExtResource("8_6w7ti")]
+visible = false
+z_index = 1000
+mouse_filter = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+script = ExtResource("6_ladpr")
+
+[node name="TileMap" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD6/wMAAQAAAAAAAAD6/wUAAQAAAAAAAAD7/wQAAQAAAAAAAQD9/wQAAQAAAAAAAQD//wQAAQAAAAAAAQABAP3/AQAAAAAAAQABAAQAAQAAAAAAAQADAAQAAQAAAAAAAQAEAP7/AQAAAAAAAAAEAAIAAQAAAAAAAAAEAAUAAQAAAAAAAAAFAP3/AQAAAAAAAQAFAAEAAQAAAAAAAQAFAAUAAQAAAAEAAAAGAAUAAQAAAAAAAAAHAAUAAQAAAAEAAAAIAP7/AQAAAAAAAAAIAAIAAQAAAAAAAAAIAAUAAQAAAAAAAAAJAP3/AQAAAAAAAQAJAAEAAQAAAAAAAQAJAAUAAQACAAAAAAD3//r/AQACAAAAAgD3//v/AQAAAAAAAQD3//z/AQAAAAAAAQD3//3/AQAAAAAAAQD3//7/AQAAAAAAAQD3////AQAAAAAAAQD3/wAAAQAAAAAAAQD3/wIAAQAAAAAAAQD3/wMAAQAAAAEAAQD3/wQAAQAAAAAAAQD3/wUAAQACAAAAAwD4//r/AQAAAAAAAAD4/wMAAQAAAAAAAAD4/wUAAQAAAAAAAAD5//r/AQAAAAAAAAD5/wMAAQAAAAEAAgD5/wQAAQAAAAAAAQD5/wUAAQAAAAEAAAD6//r/AQAAAAAAAAD7//r/AQAAAAAAAAD7/wMAAQAAAAEAAgD7/wUAAQAAAAEAAAD8//r/AQAAAAAAAAD8/wMAAQAAAAAAAAD8/wUAAQAAAAAAAAD9//r/AQAAAAAAAAD9/wMAAQAAAAEAAgD9/wUAAQAAAAEAAAD+//r/AQAAAAAAAAD+/wMAAQAAAAAAAAD+/wUAAQAAAAAAAAD///r/AQAAAAAAAAD//wMAAQAAAAEAAgD//wUAAQAAAAEAAAAAAPr/AQAAAAAAAAAAAAEAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAUAAQAAAAAAAAABAPr/AQAAAAEAAgABAPv/AQAAAAAAAQABAPz/AQAAAAAAAQABAP7/AQAAAAEAAQABAP//AQAAAAAAAQABAAAAAQAAAAAAAQABAAEAAQAAAAEAAwABAAIAAQAAAAEAAQABAAMAAQAAAAEAAwABAAUAAQAAAAEAAAACAPr/AQAAAAAAAAACAP7/AQAAAAAAAAACAAIAAQAAAAAAAAACAAUAAQAAAAAAAAADAPr/AQAAAAAAAAADAP7/AQAAAAAAAAADAAIAAQAAAAEAAgADAAMAAQAAAAAAAQADAAUAAQAAAAEAAAAEAPr/AQAAAAAAAAAFAPr/AQAAAAEAAgAFAPv/AQAAAAAAAQAFAPz/AQAAAAAAAQAFAP7/AQABAAEAAAAFAP//AQAAAAAAAQAFAAAAAQAAAAAAAQAFAAIAAQABAAEAAAAFAAMAAQAAAAAAAQAFAAQAAQAAAAAAAQAGAPr/AQAAAAAAAAAGAP7/AQAAAAAAAAAGAAIAAQAAAAAAAAAHAPr/AQAAAAAAAAAHAP7/AQAAAAAAAAAHAAIAAQAAAAEAAgAHAAMAAQAAAAAAAQAHAAQAAQAAAAAAAQAIAPr/AQAAAAAAAAAJAPr/AQACAAAAAQAJAPv/AQAAAAAAAQAJAPz/AQAAAAAAAQAJAP7/AQAAAAEAAwAJAP//AQAAAAAAAQAJAAAAAQAAAAAAAQAJAAIAAQAAAAEAAwAJAAMAAQAAAAAAAQAJAAQAAQAAAAAAAQD3/wEAAQAAAAEAAQD4/wEAAQAAAAAAAAD5/wEAAQAAAAAAAAD6/wEAAQAAAAAAAAD7/wEAAQAAAAAAAAD8/wEAAQAAAAAAAAD9/wEAAQAAAAAAAAD+/wEAAQAAAAAAAAD//wEAAQAAAAAAAAA=")
+tile_set = ExtResource("11_ic0uy")
+rendering_quadrant_size = 32
+navigation_enabled = false
+
+[node name="RigidBody2D" parent="." instance=ExtResource("12_k3n1d")]
+position = Vector2(16, 80)
