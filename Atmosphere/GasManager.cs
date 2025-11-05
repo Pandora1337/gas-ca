@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using Pandora1337.Atmosphere.State;
 
 namespace Pandora1337.Atmosphere;
 
@@ -97,46 +98,9 @@ public partial class GasManager : Node
                     neighbours.Add(pos);
             }
 
-            // Diffusion
-            foreach (GasData aData in a.Gases)
-            {
-                if (useSimpleDiffusion)
-                    break;
-
-                Array<float> nMoleDiffs = [];
-                Array<Vector2I> lowerNeighbours = [];
-                float nTotal = 0f;
-                foreach (Vector2I nPos in neighbours)
-                {
-                    if (gasDict.TryGetValue(nPos, out GasMix n))
-                    {
-                        float nMoles = n.TryGetGasData(aData.gas, out GasData nData) ? nData.moles : 0;
-                        if (aData.moles <= nMoles)
-                            continue;
-
-                        nMoleDiffs.Add(aData.moles - nMoles);
-                        lowerNeighbours.Add(nPos);
-                        nTotal += nMoles;
-                    }
-                    else
-                    {
-                        nMoleDiffs.Add(aData.moles);
-                        lowerNeighbours.Add(nPos);
-                        CreateGasCell(nPos, aData.gas);
-                    }
-                }
-
-                var aAverage = (aData.moles + nTotal) / (lowerNeighbours.Count + 1);
-                var aDelta = (aData.moles - aAverage) * diffusionRate;
-                var nMoleDiff = nMoleDiffs.Sum();
-
-                for (int i = 0; i < lowerNeighbours.Count; i++)
-                {
-                    var nDelta = aDelta * nMoleDiffs[i] / nMoleDiff;
-                    gasDict[lowerNeighbours[i]].AddGasWithTemperature(aData.gas, nDelta, a.Temperature);
-                }
-                aData.moles -= aDelta;
-            }
+            // Fancy Diffusion
+            if (!useSimpleDiffusion)
+                DiffusionAccurate(a, neighbours);
 
             Vector2 totalWind = new();
             for (int i = 0; i < neighbours.Count; i++)
@@ -193,6 +157,47 @@ public partial class GasManager : Node
                 gasData.moles -= moleDiff;
                 CreateGasCell(nPos, gasData.gas, moleDiff);
             }
+        }
+    }
+
+    void DiffusionAccurate(GasMix a, Array<Vector2I> neighbors)
+    {
+        // Fancy Diffusion
+        foreach (GasData aData in a.Gases)
+        {
+            Array<float> nMoleDiffs = [];
+            Array<Vector2I> lowerNeighbours = [];
+            float nTotal = 0f;
+            foreach (Vector2I nPos in neighbors)
+            {
+                if (gasDict.TryGetValue(nPos, out GasMix n))
+                {
+                    float nMoles = n.TryGetGasData(aData.gas, out GasData nData) ? nData.moles : 0;
+                    if (aData.moles <= nMoles)
+                        continue;
+
+                    nMoleDiffs.Add(aData.moles - nMoles);
+                    lowerNeighbours.Add(nPos);
+                    nTotal += nMoles;
+                }
+                else
+                {
+                    nMoleDiffs.Add(aData.moles);
+                    lowerNeighbours.Add(nPos);
+                    CreateGasCell(nPos, aData.gas);
+                }
+            }
+
+            var aAverage = (aData.moles + nTotal) / (lowerNeighbours.Count + 1);
+            var aDelta = (aData.moles - aAverage) * diffusionRate;
+            var nMoleDiff = nMoleDiffs.Sum();
+
+            for (int i = 0; i < lowerNeighbours.Count; i++)
+            {
+                var nDelta = aDelta * nMoleDiffs[i] / nMoleDiff;
+                gasDict[lowerNeighbours[i]].AddGasWithTemperature(aData.gas, nDelta, a.Temperature);
+            }
+            aData.moles -= aDelta;
         }
     }
 
