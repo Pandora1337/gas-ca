@@ -1,14 +1,12 @@
 using Godot;
 using Godot.Collections;
-using System;
-using System.Numerics;
+using Pandora1337.Atmosphere.State;
 
 namespace Pandora1337.Atmosphere;
 
 public partial class GasVisualiser : Node
 {
-    [Export] GasVisualiserMode mode = GasVisualiserMode.TEMP;
-    enum GasVisualiserMode
+    public enum GasVisualiserMode
     {
         NORM, // Normal gas render
         HIDE, // Hide all gas render
@@ -20,17 +18,10 @@ public partial class GasVisualiser : Node
         EPIL, // Gives epilepsy
     }
 
-    [Export] float updateTime = 1f;
-    // [Export] GasObject[] allGases = [];
+    [Export] float updateTime = 0.0001f;
 
-    [ExportSubgroup("Init")]
     [Export] PackedScene gasTile;
-
-    [ExportCategory("Max Values")]
-    [Export] float maxMoles = 50f;
-    [Export] float maxTempK = 400f;
-    [Export] float maxPressure = 5f;
-    [Export] float maxWind = 5f;
+    [Export] GasStateVis state;
 
     GasManager gm;
     public Dictionary<Vector2I, Node2D> gasTiles = [];
@@ -50,6 +41,7 @@ public partial class GasVisualiser : Node
 
         timePassed = 0;
 
+        GasVisualiserMode mode = state.filterMode;
         if (mode == GasVisualiserMode.HIDE)
         {
             RemoveAllTiles();
@@ -80,23 +72,22 @@ public partial class GasVisualiser : Node
 
     void UpdateTile(Node2D tile, GasMix a)
     {
-        switch (mode)
+        switch (state.filterMode)
         {
             case GasVisualiserMode.MOLE:
-                tile.Modulate = GetCellColor(a.Moles, maxMoles);
+                tile.Modulate = GetCellColor(a.Moles, state.maxMoles);
                 return;
 
             case GasVisualiserMode.TEMP:
-                tile.Modulate = GetCellColor(a.Temperature, maxTempK);
+                tile.Modulate = GetCellColor(a.Temperature, state.maxTempK);
                 return;
 
             case GasVisualiserMode.PRES:
-                tile.Modulate = GetCellColor(a.Pressure, maxPressure);
+                tile.Modulate = GetCellColor(a.Pressure, state.maxPressure);
                 return;
 
             case GasVisualiserMode.WIND:
-                tile.Modulate = GetCellColor(a.Wind.Length(), maxWind);
-
+                tile.Modulate = GetCellColor(a.Wind.Length(), state.maxWind);
 
                 var line = tile.GetNode<Line2D>("Line2D");
                 if (Mathf.Abs(a.Wind.X) < 0.0001 && Mathf.Abs(a.Wind.Y) < 0.0001)
@@ -107,7 +98,6 @@ public partial class GasVisualiser : Node
                     line.SetPointPosition(
                         1, a.Wind.Length() <= 28f ? a.Wind : a.Wind.Normalized() * 28f
                     );
-
                 return;
 
             case GasVisualiserMode.EPIL:
@@ -145,8 +135,6 @@ public partial class GasVisualiser : Node
     {
         foreach (var i in gasTiles)
             RemoveTile(i.Key);
-
-        gasTiles.Clear();
     }
 
     static Color GetCellColor(float value, float maxvalue)
@@ -162,7 +150,7 @@ public partial class GasVisualiser : Node
 
     Color GetEpilColor(GasMix gas)
     {
-        float mult = Mathf.Remap(gas.Pressure, 0, maxPressure, 0, 240);
+        float mult = Mathf.Remap(gas.Pressure, 0, state.maxPressure, 0, 240);
         Color col = Color.FromHsv(mult, 1, 1, 1);
         return col;
     }

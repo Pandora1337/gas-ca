@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GasStateSim" load_steps=2 format=3 uid="uid://cywatb0yb2vjd"]
+
+[ext_resource type="Script" uid="uid://bkytf2xxbpnl0" path="res://Atmosphere/State/GasStateSim.cs" id="1_u0jqm"]
+
+[resource]
+script = ExtResource("1_u0jqm")
+metadata/_custom_type_script = "uid://bkytf2xxbpnl0"

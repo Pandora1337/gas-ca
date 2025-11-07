@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=3 uid="uid://dsnv6l583ghwl"]
+
+[ext_resource type="Script" uid="uid://b8wh6msf4vt6f" path="res://UI/StateInterpreter.cs" id="1_jkv84"]
+[ext_resource type="Resource" uid="uid://cywatb0yb2vjd" path="res://Atmosphere/State/GasStateSim.tres" id="2_0adsa"]
+[ext_resource type="Resource" uid="uid://dkmfgxbeibcnp" path="res://Atmosphere/State/GasStateVis.tres" id="3_80a2v"]
+[ext_resource type="Resource" uid="uid://qc5d0ydh0s6o" path="res://Atmosphere/State/GasStateInt.tres" id="4_bh3j5"]
+[ext_resource type="Script" uid="uid://sl76e1x4pach" path="res://UI/GasOptionSelect.cs" id="5_8ngv6"]
+[ext_resource type="Resource" uid="uid://bgavbthnldbeo" path="res://Camera/CameraState.tres" id="5_bh3j5"]
+[ext_resource type="Resource" uid="uid://bpqmgethxebpq" path="res://Atmosphere/State/GasStateForce.tres" id="6_mn6w0"]
+[ext_resource type="Script" uid="uid://c6xyvxye1m65e" path="res://UI/ButtonDeleteAllBodies.cs" id="7_jqcb0"]
+
+[node name="SettingsMenu" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="FoldableContainer" type="FoldableContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -290.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+title = "Settings"
+title_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="FoldableContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(276, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="Simulation" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+folded = true
+title = "Simulation"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+state = ExtResource("2_0adsa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Simulation"]
+visible = false
+layout_mode = 2
+
+[node name="Visualisation" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+folded = true
+title = "Visualisation"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+state = ExtResource("3_80a2v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Visualisation"]
+visible = false
+layout_mode = 2
+
+[node name="Interaction" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+folded = true
+title = "Spawning"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+state = ExtResource("4_bh3j5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Interaction"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Interaction/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="FoldableContainer/ScrollContainer/VBoxContainer/Interaction/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(164, 0)
+layout_mode = 2
+text = "Gas to Spawn"
+
+[node name="OptionButton" type="OptionButton" parent="FoldableContainer/ScrollContainer/VBoxContainer/Interaction/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(84, 0)
+layout_mode = 2
+script = ExtResource("5_8ngv6")
+state = ExtResource("4_bh3j5")
+
+[node name="Camera" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+folded = true
+title = "Camera"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+state = ExtResource("5_bh3j5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Camera"]
+visible = false
+layout_mode = 2
+
+[node name="Bodies" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+folded = true
+title = "Bodies"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+state = ExtResource("6_mn6w0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Bodies"]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="FoldableContainer/ScrollContainer/VBoxContainer/Bodies/VBoxContainer"]
+modulate = Color(1, 0.007843138, 0, 1)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+focus_mode = 0
+text = "Delete All Bodies"
+script = ExtResource("7_jqcb0")
+state = ExtResource("6_mn6w0")

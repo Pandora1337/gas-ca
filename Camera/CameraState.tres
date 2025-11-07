@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CameraState" load_steps=2 format=3 uid="uid://bgavbthnldbeo"]
+
+[ext_resource type="Script" uid="uid://tvwk74ehdb5i" path="res://Camera/CameraState.cs" id="1_b7t4g"]
+
+[resource]
+script = ExtResource("1_b7t4g")
+metadata/_custom_type_script = "uid://tvwk74ehdb5i"

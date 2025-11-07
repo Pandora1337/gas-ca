@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GasStateInt" load_steps=5 format=3 uid="uid://qc5d0ydh0s6o"]
+
+[ext_resource type="Script" uid="uid://dfxwvtgp3lyrh" path="res://Atmosphere/State/GasStateInt.cs" id="1_5gimn"]
+[ext_resource type="Resource" uid="uid://i0k6cuq6dok5" path="res://Atmosphere/gas_objects/gases/carbon_dioxide.tres" id="1_bk37c"]
+[ext_resource type="Resource" uid="uid://1lv207esmjw8" path="res://Atmosphere/gas_objects/gases/oxygen.tres" id="2_mp3vh"]
+[ext_resource type="Resource" uid="uid://ce2t2adjqwqht" path="res://Atmosphere/gas_objects/gases/nitrogen.tres" id="3_m7mr1"]
+
+[resource]
+script = ExtResource("1_5gimn")
+gases = Array[Object]([ExtResource("1_bk37c"), ExtResource("2_mp3vh"), ExtResource("3_m7mr1")])
+metadata/_custom_type_script = "uid://dfxwvtgp3lyrh"

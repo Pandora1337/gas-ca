@@ -1,31 +1,39 @@
-[gd_scene load_steps=11 format=4 uid="uid://dtkvl085plck6"]
+[gd_scene load_steps=14 format=4 uid="uid://dtkvl085plck6"]
 
+[ext_resource type="PackedScene" uid="uid://dsnv6l583ghwl" path="res://UI/settings_menu.tscn" id="1_ic0uy"]
 [ext_resource type="Script" uid="uid://dvttvldbtwm36" path="res://Atmosphere/GasManager.cs" id="1_iuq3l"]
 [ext_resource type="PackedScene" uid="uid://bq5imob1b0yq" path="res://Tiles/gas_tile.tscn" id="2_dwbse"]
+[ext_resource type="Resource" uid="uid://cywatb0yb2vjd" path="res://Atmosphere/State/GasStateSim.tres" id="3_k3n1d"]
 [ext_resource type="Script" uid="uid://cflntcv1n72fp" path="res://Atmosphere/GasVisualiser.cs" id="3_pkg7o"]
 [ext_resource type="Script" uid="uid://b6dy8ka6rh5rb" path="res://Atmosphere/Debug/GasInteractor.cs" id="4_ioo17"]
-[ext_resource type="Resource" uid="uid://cwlwas2dxpm3c" path="res://Atmosphere/gas_objects/gas_mixes/pure_co2.tres" id="5_gbfbk"]
-[ext_resource type="Resource" uid="uid://chlcgg5jplo55" path="res://Atmosphere/gas_objects/gas_mixes/pure_o2.tres" id="6_ioo17"]
-[ext_resource type="Script" uid="uid://cxfhcw6ya70o5" path="res://UI/CameraControl.cs" id="6_ladpr"]
+[ext_resource type="Resource" uid="uid://dkmfgxbeibcnp" path="res://Atmosphere/State/GasStateVis.tres" id="6_2o6r5"]
+[ext_resource type="Script" uid="uid://cxfhcw6ya70o5" path="res://Camera/CameraControl.cs" id="6_ladpr"]
 [ext_resource type="PackedScene" uid="uid://df44h0t1hshgy" path="res://Atmosphere/Debug/gas_tooltip.tscn" id="8_6w7ti"]
+[ext_resource type="Resource" uid="uid://qc5d0ydh0s6o" path="res://Atmosphere/State/GasStateInt.tres" id="11_hiqwa"]
 [ext_resource type="TileSet" uid="uid://8bhnloyp7s68" path="res://Tiles/walls.tres" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cc18keya7wo3a" path="res://body.tscn" id="12_k3n1d"]
+[ext_resource type="Resource" uid="uid://bgavbthnldbeo" path="res://Camera/CameraState.tres" id="13_70uel"]
 
 [node name="World" type="Node2D"]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SettingsMenu" parent="CanvasLayer" instance=ExtResource("1_ic0uy")]
+
 [node name="GasManager" type="Node" parent="."]
 script = ExtResource("1_iuq3l")
+state = ExtResource("3_k3n1d")
 
 [node name="GasVisualiser" type="Node" parent="GasManager"]
 script = ExtResource("3_pkg7o")
-mode = 6
-updateTime = 0.001
 gasTile = ExtResource("2_dwbse")
+state = ExtResource("6_2o6r5")
 
 [node name="GasInteractor" type="Node" parent="GasManager"]
 script = ExtResource("4_ioo17")
-gases = Array[Object]([ExtResource("5_gbfbk"), ExtResource("6_ioo17")])
 body = ExtResource("12_k3n1d")
+state = ExtResource("11_hiqwa")
+stateSim = ExtResource("3_k3n1d")
 
 [node name="GasTooltip" parent="GasManager" instance=ExtResource("8_6w7ti")]
 visible = false
@@ -35,6 +43,7 @@ mouse_filter = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 script = ExtResource("6_ladpr")
+state = ExtResource("13_70uel")
 
 [node name="TileMap" type="TileMapLayer" parent="."]
 use_parent_material = true

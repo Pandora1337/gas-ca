@@ -53,7 +53,7 @@ public static class Gas
 
     public static float KToCelsius(float k)
     {
-        return k + 273.15f;
+        return k - 273.15f;
     }
 
     public static float CelsiusToK(float celsius)

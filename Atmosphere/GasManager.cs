@@ -11,26 +11,10 @@ namespace Pandora1337.Atmosphere;
 public partial class GasManager : Node
 {
     //this class handles everything gas and atmosphere related
-    [ExportCategory("Simulation")]
-    [Export] public bool isContinuous = true;
-    /// <summary>
-    /// Wind will only flow to lower pressure cells
-    /// </summary>
-    [Export] public bool onlyOutflow = false;
 
-    enum NeighborNumber { FOUR, EIGHT }
-    [Export] NeighborNumber neighborMode;
+    public enum NeighborNumber { FOUR, EIGHT }
 
-    [ExportCategory("Diffusion")]
-    [Export] bool useSimpleDiffusion = false;
-    [Export] float diffusionRate = 0.1f;
-
-    /// <summary> values below will delete gas cell</summary>
-    [Export] float minConcentration = 0.001f;
-
-    [ExportCategory("Coefs")]
-    [Export] float thermalConductivity = 0.02f;
-    [Export] float windForceCoef = 1f;
+    [Export] public GasStateSim state;
 
     // TODO make these private
     public TileMapLayer _tilemap;
@@ -65,7 +49,7 @@ public partial class GasManager : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!isContinuous)
+        if (!state.isContinuous)
             return;
 
         // if (Engine.GetPhysicsFrames() % 10 != 0)
@@ -83,7 +67,7 @@ public partial class GasManager : Node
         foreach ((Vector2I aPos, GasMix a) in copyDict)
         {
             // not enough gas, delete cell
-            if (a.Moles < minConcentration || a.Gases.Count == 0)
+            if (a.Moles < state.minConcentration || a.Gases.Count == 0)
             {
                 RemoveGasCell(aPos);
                 continue;
@@ -99,7 +83,7 @@ public partial class GasManager : Node
             }
 
             // Fancy Diffusion
-            if (!useSimpleDiffusion)
+            if (!state.useSimpleDiffusion)
                 DiffusionAccurate(a, neighbours);
 
             Vector2 totalWind = new();
@@ -107,7 +91,7 @@ public partial class GasManager : Node
             {
                 Vector2I nPos = neighbours[i];
 
-                if (useSimpleDiffusion)
+                if (state.useSimpleDiffusion)
                     Diffusion(a, nPos);
 
                 GasMix n = gasDict[nPos];
@@ -143,7 +127,7 @@ public partial class GasManager : Node
             {
                 // Is there this gas?
                 float destinationMoles = n.TryGetGasData(gasData.gas, out GasData destGasData) ? destGasData.moles : 0;
-                float moleDiff = diffusionRate * (gasData.moles - destinationMoles);
+                float moleDiff = state.diffusionRate * (gasData.moles - destinationMoles);
 
                 // if (moleDiff <= Gas.MIN_PRESSURE_DIFFERENCE / 10)
                 //     continue;
@@ -153,7 +137,7 @@ public partial class GasManager : Node
             }
             else
             {
-                var moleDiff = diffusionRate * gasData.moles;
+                var moleDiff = state.diffusionRate * gasData.moles;
                 gasData.moles -= moleDiff;
                 CreateGasCell(nPos, gasData.gas, moleDiff);
             }
@@ -189,7 +173,7 @@ public partial class GasManager : Node
             }
 
             var aAverage = (aData.moles + nTotal) / (lowerNeighbours.Count + 1);
-            var aDelta = (aData.moles - aAverage) * diffusionRate;
+            var aDelta = (aData.moles - aAverage) * state.diffusionRate;
             var nMoleDiff = nMoleDiffs.Sum();
 
             for (int i = 0; i < lowerNeighbours.Count; i++)
@@ -206,7 +190,7 @@ public partial class GasManager : Node
         if (destination.Temperature > source.Temperature)
             return;
 
-        float deltaT = thermalConductivity * (source.Temperature - destination.Temperature);
+        float deltaT = state.thermalConductivity * (source.Temperature - destination.Temperature);
 
         source.Temperature -= deltaT;
         destination.Temperature += deltaT;
@@ -214,16 +198,16 @@ public partial class GasManager : Node
 
     private Vector2 GetWind(float aPressure, Vector2 aPos, float nPressure, Vector2 nPos)
     {
-        if (onlyOutflow && nPressure > aPressure)
+        if (state.onlyOutflow && nPressure > aPressure)
             return Vector2.Zero;
 
         Vector2 nDir = nPos - aPos;
-        return windForceCoef * (aPressure - nPressure) * nDir;
+        return state.windForceCoef * (aPressure - nPressure) * nDir;
     }
 
     private IEnumerable<Vector2I> GetNeighbourCells(Vector2I parentPos)
     {
-        switch (neighborMode)
+        switch (state.neighborMode)
         {
             case NeighborNumber.EIGHT:
                 // 8 Cell neighborhood
