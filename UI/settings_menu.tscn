@@ -136,3 +136,27 @@ focus_mode = 0
 text = "Delete All Bodies"
 script = ExtResource("7_jqcb0")
 state = ExtResource("6_mn6w0")
+
+[node name="Controls" type="FoldableContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(262, 0)
+layout_mode = 2
+focus_mode = 0
+title = "Controls"
+title_alignment = 1
+script = ExtResource("1_jkv84")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer/VBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="FoldableContainer/ScrollContainer/VBoxContainer/Controls/VBoxContainer"]
+layout_mode = 2
+text = "LMB - Add Spawn Type
+RMB - Remove Cell
+WASD / ARROWS / MMB - Move
+SPACE - Pause / Resume Sim
+SHIFT + SPACE - Step 1 Frame
+SCROLL - Zoom
+SHIFT + SCROLL - Change 
+                                Spawn Type
+CTRL + SCROLL - Change
+                               Spawn Gas"
