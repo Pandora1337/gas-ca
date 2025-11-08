@@ -1,11 +1,14 @@
-[gd_scene load_steps=14 format=4 uid="uid://dtkvl085plck6"]
+[gd_scene load_steps=17 format=4 uid="uid://dtkvl085plck6"]
 
 [ext_resource type="PackedScene" uid="uid://dsnv6l583ghwl" path="res://UI/settings_menu.tscn" id="1_ic0uy"]
 [ext_resource type="Script" uid="uid://dvttvldbtwm36" path="res://Atmosphere/GasManager.cs" id="1_iuq3l"]
+[ext_resource type="Script" uid="uid://cm7twedadevsl" path="res://UI/Status/FpsCounter.cs" id="2_70uel"]
 [ext_resource type="PackedScene" uid="uid://bq5imob1b0yq" path="res://Tiles/gas_tile.tscn" id="2_dwbse"]
+[ext_resource type="Script" uid="uid://bsury1dojggup" path="res://UI/Status/SimStat.cs" id="3_hiqwa"]
 [ext_resource type="Resource" uid="uid://cywatb0yb2vjd" path="res://Atmosphere/State/GasStateSim.tres" id="3_k3n1d"]
 [ext_resource type="Script" uid="uid://cflntcv1n72fp" path="res://Atmosphere/GasVisualiser.cs" id="3_pkg7o"]
 [ext_resource type="Script" uid="uid://b6dy8ka6rh5rb" path="res://Atmosphere/Debug/GasInteractor.cs" id="4_ioo17"]
+[ext_resource type="Script" uid="uid://b24agqkp34af6" path="res://UI/Status/SpawnMode.cs" id="5_2u3nc"]
 [ext_resource type="Resource" uid="uid://dkmfgxbeibcnp" path="res://Atmosphere/State/GasStateVis.tres" id="6_2o6r5"]
 [ext_resource type="Script" uid="uid://cxfhcw6ya70o5" path="res://Camera/CameraControl.cs" id="6_ladpr"]
 [ext_resource type="PackedScene" uid="uid://df44h0t1hshgy" path="res://Atmosphere/Debug/gas_tooltip.tscn" id="8_6w7ti"]
@@ -19,6 +22,36 @@
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SettingsMenu" parent="CanvasLayer" instance=ExtResource("1_ic0uy")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="FPS" type="RichTextLabel" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Render FPS: 200"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_70uel")
+
+[node name="SimStat" type="RichTextLabel" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Simulation: RUNNING"
+fit_content = true
+scroll_active = false
+script = ExtResource("3_hiqwa")
+state = ExtResource("3_k3n1d")
+
+[node name="SpawnMode" type="RichTextLabel" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Spawn Mode: WALLS"
+fit_content = true
+scroll_active = false
+script = ExtResource("5_2u3nc")
+state = ExtResource("11_hiqwa")
 
 [node name="GasManager" type="Node" parent="."]
 script = ExtResource("1_iuq3l")
