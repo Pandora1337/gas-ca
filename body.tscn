@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bakdlxs3gv0pg" path="res://Atmosphere/Interfaces/GasForce.cs" id="1_in4ii"]
 [ext_resource type="Resource" uid="uid://bpqmgethxebpq" path="res://Atmosphere/State/GasStateForce.tres" id="2_4qfe4"]
-[ext_resource type="Texture2D" uid="uid://cs7c6n0oywdsw" path="res://icon.svg" id="2_bfrdl"]
+[ext_resource type="Texture2D" uid="uid://cs7c6n0oywdsw" path="res://Icons/icon.svg" id="2_bfrdl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wse8f"]
 
