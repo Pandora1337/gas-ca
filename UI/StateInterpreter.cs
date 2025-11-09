@@ -26,9 +26,15 @@ public partial class StateInterpreter : Control
 		if (state == null)
 			return;
 		
-        bool foundScriptName = false;
+        bool isEditor = OS.HasFeature("editor");
 		VBoxContainer root = GetNode<VBoxContainer>("VBoxContainer");
-		foreach (Dictionary dict in state.GetPropertyList())
+
+        Array<Dictionary> properties = state.GetPropertyList();
+        if (!isEditor)
+            properties.Reverse();
+
+        bool foundScriptName = false;
+        foreach (Dictionary dict in properties)
 		{
 			// GD.Print(dict);
 			
@@ -36,9 +42,9 @@ public partial class StateInterpreter : Control
 			// Category
 			if ((int)dict["usage"] == (int)PropertyUsageFlags.Category && (String)dict["hint_string"] == "")
 			{
-				// Script Class names are also serialised as a category, so
+				// Script Class names are also serialised as a category in the Editor, so
 				// to avoid double naming I skip the first "category"
-				if (!foundScriptName)
+				if (isEditor && !foundScriptName)
 				{
 					foundScriptName = true;
 					continue;
