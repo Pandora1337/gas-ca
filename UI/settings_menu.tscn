@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dsnv6l583ghwl"]
+[gd_scene load_steps=10 format=3 uid="uid://dsnv6l583ghwl"]
 
 [ext_resource type="Script" uid="uid://b8wh6msf4vt6f" path="res://UI/StateInterpreter.cs" id="1_jkv84"]
 [ext_resource type="Resource" uid="uid://cywatb0yb2vjd" path="res://Atmosphere/State/GasStateSim.tres" id="2_0adsa"]
@@ -8,6 +8,9 @@
 [ext_resource type="Resource" uid="uid://bgavbthnldbeo" path="res://Camera/CameraState.tres" id="5_bh3j5"]
 [ext_resource type="Resource" uid="uid://bpqmgethxebpq" path="res://Atmosphere/State/GasStateForce.tres" id="6_mn6w0"]
 [ext_resource type="Script" uid="uid://c6xyvxye1m65e" path="res://UI/ButtonDeleteAllBodies.cs" id="7_jqcb0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exjv2"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 0.39215687)
 
 [node name="SettingsMenu" type="Control"]
 z_index = 1
@@ -30,11 +33,11 @@ grow_horizontal = 0
 grow_vertical = 2
 focus_mode = 0
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_exjv2")
 title = "Settings"
 title_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="FoldableContainer"]
-clip_contents = false
 custom_minimum_size = Vector2(276, 0)
 layout_mode = 2
 size_flags_horizontal = 4
