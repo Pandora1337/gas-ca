@@ -24,8 +24,8 @@ This project demonstrates my implementation of CA for gas simulation in Godot wi
 ### Sim Preview:
 https://github.com/user-attachments/assets/d7678646-3539-4784-87b5-f23b45f50977
 
-### Dynamic GUI property:
+### Dynamic property generation in the GUI:
 https://github.com/user-attachments/assets/c1562176-1ed2-4b17-9691-80047391014f
 
-### MVVM Diagram:
+### MVVM Diagram of the project:
 <img width="753" height="462" alt="MVVMSchema" src="https://github.com/user-attachments/assets/4b626151-7c44-44cb-b0f1-71b7aad49158" />
