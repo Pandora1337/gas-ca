@@ -41,6 +41,7 @@ public partial class GasVisualiser : Node
 
         timePassed = 0;
 
+        // TODO make this update along with the GasManager 
         GasVisualiserMode mode = state.filterMode;
         if (mode == GasVisualiserMode.HIDE)
         {

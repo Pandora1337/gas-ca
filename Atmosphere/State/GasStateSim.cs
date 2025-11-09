@@ -6,14 +6,19 @@ namespace Pandora1337.Atmosphere.State;
 [GlobalClass]
 public partial class GasStateSim : GasState
 {
-    [Export] public bool isContinuous = true;
+    [Export] public bool isRunning = true;
+    public bool isContinuous
+    {
+        get => isRunning;
+        set => isRunning = value;
+    }
 
     /// <summary>
     /// Wind will only flow to lower pressure cells
     /// </summary>
-    [Export] public bool onlyOutflow = false;
+    [Export] public bool windFlowToGasCellsOnly = false;
 
-    [Export] public GasManager.NeighborNumber neighborMode;
+    [Export] public GasManager.NeighborNumber neighborNumber;
 
     [ExportCategory("Diffusion")]
     [Export] public bool useSimpleDiffusion = false;
@@ -24,5 +29,5 @@ public partial class GasStateSim : GasState
 
     [ExportCategory("Coefs")]
     [Export] public float thermalConductivity = 0.02f;
-    [Export]public  float windForceCoef = 1f;
+    [Export] public float windForceCoef = 1f;
 }

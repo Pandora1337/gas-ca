@@ -85,6 +85,7 @@ public partial class GasManager : Node
             // Fancy Diffusion
             if (!state.useSimpleDiffusion)
                 DiffusionAccurate(a, neighbours);
+                // TODO consider distance for diffusion
 
             Vector2 totalWind = new();
             for (int i = 0; i < neighbours.Count; i++)
@@ -198,7 +199,7 @@ public partial class GasManager : Node
 
     private Vector2 GetWind(float aPressure, Vector2 aPos, float nPressure, Vector2 nPos)
     {
-        if (state.onlyOutflow && nPressure > aPressure)
+        if (state.windFlowToGasCellsOnly && nPressure > aPressure)
             return Vector2.Zero;
 
         Vector2 nDir = nPos - aPos;
@@ -207,7 +208,7 @@ public partial class GasManager : Node
 
     private IEnumerable<Vector2I> GetNeighbourCells(Vector2I parentPos)
     {
-        switch (state.neighborMode)
+        switch (state.neighborNumber)
         {
             case NeighborNumber.EIGHT:
                 // 8 Cell neighborhood

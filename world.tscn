@@ -86,4 +86,4 @@ rendering_quadrant_size = 32
 navigation_enabled = false
 
 [node name="RigidBody2D" parent="." instance=ExtResource("12_k3n1d")]
-position = Vector2(16, 80)
+position = Vector2(-113, 81)
